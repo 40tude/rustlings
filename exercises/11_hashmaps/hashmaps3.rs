@@ -9,7 +9,7 @@
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
-#[derive(Default)]
+#[derive(Default, Copy, Clone)]
 struct TeamScores {
     goals_scored: u8,
     goals_conceded: u8,
@@ -31,8 +31,28 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         // Keep in mind that goals scored by team 1 will be the number of goals
         // conceded by team 2. Similarly, goals scored by team 2 will be the
         // number of goals conceded by team 1.
-    }
+        //
+        // Pour chaque match
+        //      team_1_name.scored = team_1_name.scored + team_1_score
+        //      team_1_name.conceded = team_1_name.conceded + team_2_score
+        //      team_2_name.scored = team_2_name.scored + team_2_score
+        //      team_2_name.conceded = team_2_name.conceded + team_1_score
+        let mut team_score = scores.get(&team_1_name).copied().unwrap_or(TeamScores {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_score.goals_scored += team_1_score;
+        team_score.goals_conceded += team_2_score;
+        scores.insert(team_1_name, team_score);
 
+        let mut team_score = scores.get(&team_2_name).copied().unwrap_or(TeamScores {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_score.goals_scored += team_2_score;
+        team_score.goals_conceded += team_1_score;
+        scores.insert(team_2_name, team_score);
+    }
     scores
 }
 
@@ -54,9 +74,11 @@ England,Spain,1,0";
     fn build_scores() {
         let scores = build_scores_table(RESULTS);
 
-        assert!(["England", "France", "Germany", "Italy", "Poland", "Spain"]
-            .into_iter()
-            .all(|team_name| scores.contains_key(team_name)));
+        assert!(
+            ["England", "France", "Germany", "Italy", "Poland", "Spain"]
+                .into_iter()
+                .all(|team_name| scores.contains_key(team_name))
+        );
     }
 
     #[test]
