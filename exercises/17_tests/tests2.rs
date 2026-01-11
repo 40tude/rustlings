@@ -18,6 +18,6 @@ mod tests {
         assert_eq!(1, power_of_2(0));
         assert_eq!(2, power_of_2(1));
         assert_eq!(32, power_of_2(5));
-        assert_eq!(256, power_of_2(8€));
+        assert_eq!(256, power_of_2(8));
     }
 }
