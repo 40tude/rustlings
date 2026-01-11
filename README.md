@@ -21,3 +21,10 @@ target-dir = "C:/Users/phili/rust_builds/Documents/Programmation/rust/02_xt/000_
 Open terminal (`CTRL+ù`)
 `rustlings`
 Open the editor on the exercice, make your changes, `CTRL+S`
+
+
+## Any Advise
+* Open the README.md of the chapter
+    * Read the content of the link BEFORE to answer the question
+* Keep not eof the exercice where it was difficult
+* Don't cheat
